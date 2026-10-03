@@ -23,7 +23,7 @@
     <section class="content" id="content">
       <h1>Olá, seja bem vinda, Lara!</h1>
       <p>Esse site contem algumas descobertas que eu fiz sobre alguém muito especial.</p>
-      <button class="btn" id="enter">Entrar</button>
+      <button class="btn" id="enter" type="button">Entrar</button>
     </section>
   </main>
 
@@ -142,7 +142,7 @@ body {
   justify-content: center;
   text-align: center;
   padding: 0 40px;
-  transition: opacity 0.5s;
+  transition: opacity 0.45s ease, transform 0.45s ease;
 }
 
 .content.fade {
@@ -178,7 +178,7 @@ p {
   transition: transform 0.15s, box-shadow 0.15s;
 }
 
-.btn:active {
+.btn:hover {\n  box-shadow: 0 0 20px 4px rgba(120, 181, 127, 0.55);\n}\n\n.btn:active {
   transform: scale(0.95);
   box-shadow: 0 0 22px 4px rgba(120, 181, 127, 0.6);
 }
