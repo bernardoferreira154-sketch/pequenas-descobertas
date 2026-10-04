@@ -4,99 +4,422 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Para Lara</title>
+
 <style>
 :root{
-  --bg:#0a0d0b; --fg:#fff; --bar:#6fae75; --shape:#3f7046;
-  --tab:#6fb572; --tab-on:#7fcf83; --tab-lock:#2f5230;
-  --card:#2a2a2a; --cap:#d9d9d9; --line:#5a5d5b; --next:#2b2f2c;
+  --bg:#0a0d0b;
+  --fg:#fff;
+  --bar:#6fae75;
+  --shape:#3f7046;
+  --tab:#6fb572;
+  --tab-on:#7fcf83;
+  --tab-lock:#2f5230;
+  --card:#2a2a2a;
+  --cap:#d9d9d9;
+  --line:#5a5d5b;
+  --next:#2b2f2c;
 }
-*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.app{display:flex;flex-direction:column;height:100dvh;max-width:480px;margin:0 auto;padding-top:env(safe-area-inset-top,0)}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  -webkit-tap-highlight-color:transparent
+}
+
+html,body{
+  height:100%;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif
+}
+
+.app{
+  display:flex;
+  flex-direction:column;
+  height:100dvh;
+  max-width:480px;
+  margin:0 auto;
+  padding-top:env(safe-area-inset-top,0)
+}
 
 /* Barra superior */
-.bar{position:relative;flex:0 0 44px;background:var(--bar);overflow:hidden}
-.bar i{position:absolute;background:var(--shape);opacity:.85}
-.bar i:nth-child(1){left:6%;top:10px;width:20px;height:18px;border-radius:40%;transform:rotate(15deg)}
-.bar i:nth-child(2){left:21%;top:24px;width:12px;height:12px;border-radius:50%}
-.bar i:nth-child(3){left:33%;top:8px;width:10px;height:22px;border-radius:0 100% 0 100%;transform:rotate(20deg)}
-.bar i:nth-child(4){left:53%;top:4px;width:30px;height:30px;border-radius:0 100% 0 0;transform:rotate(20deg)}
-.bar i:nth-child(5){left:74%;top:6px;width:20px;height:20px;border-radius:50%}
-.bar i:nth-child(6){left:88%;top:6px;width:26px;height:26px;border-radius:20% 100% 20% 20%;transform:rotate(45deg)}
+.bar{
+  position:relative;
+  flex:0 0 44px;
+  background:var(--bar);
+  overflow:hidden
+}
 
-.body{flex:1;display:flex;min-height:0}
+.bar i{
+  position:absolute;
+  background:var(--shape);
+  opacity:.85
+}
+
+.bar i:nth-child(1){
+  left:6%;
+  top:10px;
+  width:20px;
+  height:18px;
+  border-radius:40%;
+  transform:rotate(15deg)
+}
+
+.bar i:nth-child(2){
+  left:21%;
+  top:24px;
+  width:12px;
+  height:12px;
+  border-radius:50%
+}
+
+.bar i:nth-child(3){
+  left:33%;
+  top:8px;
+  width:10px;
+  height:22px;
+  border-radius:0 100% 0 100%;
+  transform:rotate(20deg)
+}
+
+.bar i:nth-child(4){
+  left:53%;
+  top:4px;
+  width:30px;
+  height:30px;
+  border-radius:0 100% 0 0;
+  transform:rotate(20deg)
+}
+
+.bar i:nth-child(5){
+  left:74%;
+  top:6px;
+  width:20px;
+  height:20px;
+  border-radius:50%
+}
+
+.bar i:nth-child(6){
+  left:88%;
+  top:6px;
+  width:26px;
+  height:26px;
+  border-radius:20% 100% 20% 20%;
+  transform:rotate(45deg)
+}
+
+.body{
+  flex:1;
+  display:flex;
+  min-height:0
+}
 
 /* Menu lateral */
-.side{flex:0 0 clamp(104px,31%,140px);display:flex;flex-direction:column;gap:12px;padding:14px 10px 24px;border-right:2px solid var(--line);overflow-y:auto}
-.tab{position:relative;flex:0 0 auto;height:38px;border:0;border-radius:14px;background:var(--tab);color:#fff;font:inherit;font-size:14px;cursor:pointer;transition:background .25s,box-shadow .25s}
-.tab.on{background:var(--tab-on);box-shadow:0 0 0 2px rgba(143,224,148,.35),0 0 14px 3px rgba(127,207,131,.65)}
-.tab.carta.locked{background:var(--tab-lock);color:rgba(255,255,255,.85)}
-.tab.carta:not(.locked):not(.on){box-shadow:0 0 12px 3px rgba(127,207,131,.5);animation:pulse 2.4s ease-in-out infinite}
-.tab .lock{position:absolute;right:-3px;bottom:-9px;width:18px;height:20px}
-.tab.carta:not(.locked) .lock{display:none}
-.tab.shake{animation:shake .35s}
-@keyframes pulse{50%{box-shadow:0 0 20px 6px rgba(127,207,131,.7)}}
-@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.side{
+  flex:0 0 clamp(104px,31%,140px);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding:14px 10px 24px;
+  border-right:2px solid var(--line);
+  overflow-y:auto
+}
+
+.tab{
+  position:relative;
+  flex:0 0 auto;
+  height:38px;
+  border:0;
+  border-radius:14px;
+  background:var(--tab);
+  color:#fff;
+  font:inherit;
+  font-size:14px;
+  cursor:pointer;
+  transition:background .25s,box-shadow .25s
+}
+
+.tab.on{
+  background:var(--tab-on);
+  box-shadow:
+    0 0 0 2px rgba(143,224,148,.35),
+    0 0 14px 3px rgba(127,207,131,.65)
+}
+
+.tab.carta.locked{
+  background:var(--tab-lock);
+  color:rgba(255,255,255,.85)
+}
+
+.tab.carta:not(.locked):not(.on){
+  box-shadow:0 0 12px 3px rgba(127,207,131,.5);
+  animation:pulse 2.4s ease-in-out infinite
+}
+
+.tab .lock{
+  position:absolute;
+  right:-3px;
+  bottom:-9px;
+  width:18px;
+  height:20px
+}
+
+.tab.carta:not(.locked) .lock{
+  display:none
+}
+
+.tab.shake{
+  animation:shake .35s
+}
+
+@keyframes pulse{
+  50%{
+    box-shadow:0 0 20px 6px rgba(127,207,131,.7)
+  }
+}
+
+@keyframes shake{
+  25%{transform:translateX(-4px)}
+  75%{transform:translateX(4px)}
+}
 
 /* Conteúdo */
-.main{flex:1;min-width:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 16px 8px}
-.panel[hidden]{display:none}
-.intro{padding:0 4px 18px;border-bottom:2px solid var(--line);margin-bottom:24px}
-.intro p{font-size:15px;line-height:1.35}
+.main{
+  flex:1;
+  min-width:0;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:20px 16px 8px
+}
+
+.panel[hidden]{
+  display:none
+}
+
+.intro{
+  padding:0 4px 18px;
+  border-bottom:2px solid var(--line);
+  margin-bottom:24px
+}
+
+.intro p{
+  font-size:15px;
+  line-height:1.35
+}
 
 /* Cards imagem + legenda */
-.card{width:100%;max-width:240px;margin:0 auto 24px;border-radius:0 0 16px 16px;overflow:hidden;background:var(--card)}
-.media{aspect-ratio:210/185;background:var(--card)}
-.media img{display:block;width:100%;height:100%;object-fit:cover}
-.media img[src=""],.media img:not([src]){display:none}
-.cap{position:relative;min-height:60px;padding:10px 28px 10px 14px;background:var(--cap);color:#1a1a1a;font-size:13px;line-height:1.35}
-.cap p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.cap.long{cursor:pointer}
-.cap.long::after{content:"";position:absolute;right:12px;top:16px;width:7px;height:7px;border:solid #555;border-width:0 2px 2px 0;transform:rotate(45deg);transition:transform .2s}
-.cap.open p{display:block;-webkit-line-clamp:unset;overflow:visible}
-.cap.open::after{transform:rotate(-135deg)}
+.card{
+  width:100%;
+  max-width:240px;
+  margin:0 auto 24px;
+  border-radius:0 0 16px 16px;
+  overflow:hidden;
+  background:var(--card)
+}
 
-.letter{padding:6px 4px 30px;font-size:14px;line-height:1.6}
+.media{
+  aspect-ratio:210/185;
+  background:var(--card)
+}
+
+.media img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
+.media img[src=""],
+.media img:not([src]){
+  display:none
+}
+
+.cap{
+  position:relative;
+  min-height:60px;
+  padding:10px 28px 10px 14px;
+  background:var(--cap);
+  color:#1a1a1a;
+  font-size:13px;
+  line-height:1.35
+}
+
+.cap p{
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden
+}
+
+.cap.long{
+  cursor:pointer
+}
+
+.cap.long::after{
+  content:"";
+  position:absolute;
+  right:12px;
+  top:16px;
+  width:7px;
+  height:7px;
+  border:solid #555;
+  border-width:0 2px 2px 0;
+  transform:rotate(45deg);
+  transition:transform .2s
+}
+
+.cap.open p{
+  display:block;
+  -webkit-line-clamp:unset;
+  overflow:visible
+}
+
+.cap.open::after{
+  transform:rotate(-135deg)
+}
+
+.letter{
+  padding:6px 4px 30px;
+  font-size:14px;
+  line-height:1.6
+}
 
 /* Seta próxima aba */
-.next{display:grid;place-items:center;width:44px;height:44px;margin:34px auto 28px;border:0;border-radius:50%;background:var(--next);cursor:pointer}
-.next svg{width:20px;height:20px;fill:none;stroke:#aeb5b0;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.next:active{transform:scale(.92)}
+.next{
+  display:grid;
+  place-items:center;
+  width:44px;
+  height:44px;
+  margin:34px auto 28px;
+  border:0;
+  border-radius:50%;
+  background:var(--next);
+  cursor:pointer
+}
+
+.next svg{
+  width:20px;
+  height:20px;
+  fill:none;
+  stroke:#aeb5b0;
+  stroke-width:2.5;
+  stroke-linecap:round;
+  stroke-linejoin:round
+}
+
+.next:active{
+  transform:scale(.92)
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
-  <div class="bar"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <div class="bar">
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+  </div>
 
   <div class="body">
+
     <nav class="side">
+
       <button class="tab" data-id="locais">Locais</button>
+
       <button class="tab" data-id="filmes">Filmes</button>
+
       <button class="tab" data-id="bandas">Bandas</button>
+
       <button class="tab" data-id="livros">Livros</button>
+
       <button class="tab" data-id="comidas">Comidas</button>
+
       <button class="tab" data-id="desejos">Desejos</button>
+
       <button class="tab" data-id="hobbies">Hobbies</button>
+
       <button class="tab" data-id="poemas">Poemas</button>
-      <button class="tab carta locked" data-id="carta">A Carta
-        <svg class="lock" viewBox="0 0 18 20"><path d="M5 9V6a4 4 0 0 1 8 0v3" fill="none" stroke="#c9a800" stroke-width="2"/><rect x="1" y="9" width="16" height="10" rx="1" fill="#e0bd00"/></svg>
+
+      <button class="tab carta locked" data-id="carta">
+        A Carta
+
+        <svg class="lock" viewBox="0 0 18 20">
+          <path
+            d="M5 9V6a4 4 0 0 1 8 0v3"
+            fill="none"
+            stroke="#c9a800"
+            stroke-width="2"
+          />
+
+          <rect
+            x="1"
+            y="9"
+            width="16"
+            height="10"
+            rx="1"
+            fill="#e0bd00"
+          />
+        </svg>
+
       </button>
+
     </nav>
 
     <main class="main" id="main">
 
-      <!-- Para cada card: coloque o link da imagem em src="" e o texto dentro do <p> -->
-
+      <!-- LOCAIS -->
       <section class="panel" id="locais" hidden>
-        <header class="intro"><p>Aqui estão alguns locais em que nós estivemos juntos</p></header>
-        <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Escreva a legenda aqui. Se o texto for grande, a parte branca fica recolhida e, ao tocar nela, expande para mostrar tudo. Este é só um texto de exemplo para testar.</p></div></article>
-        <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
-        <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
-        <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
+
+        <header class="intro">
+          <p>Aqui estão alguns locais em que nós estivemos juntos</p>
+        </header>
+
+        <article class="card">
+          <div class="media">
+            <img src="" alt="">
+          </div>
+
+          <div class="cap">
+            <p>
+              Escreva a legenda aqui. Se o texto for grande,
+              a parte branca fica recolhida e, ao tocar nela,
+              expande para mostrar tudo. Este é só um texto
+              de exemplo para testar.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="media"><img src="" alt=""></div>
+          <div class="cap"><p>Legenda aqui.</p></div>
+        </article>
+
+        <article class="card">
+          <div class="media"><img src="" alt=""></div>
+          <div class="cap"><p>Legenda aqui.</p></div>
+        </article>
+
+        <article class="card">
+          <div class="media"><img src="" alt=""></div>
+          <div class="cap"><p>Legenda aqui.</p></div>
+        </article>
+
       </section>
 
+
+      <!-- FILMES -->
       <section class="panel" id="filmes" hidden>
-        <header class="intro"><p>Aqui estão alguns filmes que vimos ou que lembram você</p></header>
+
+        <header class="intro">
+          <p>Aqui estão alguns filmes que vimos ou que lembram você</p>
+        </header>
+
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
@@ -106,24 +429,48 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:system-ui
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
+
       </section>
 
+
+      <!-- BANDAS -->
       <section class="panel" id="bandas" hidden>
-        <header class="intro"><p>Aqui estão algumas bandas que você ama</p></header>
+
+        <header class="intro">
+          <p>Aqui estão algumas bandas que você ama</p>
+        </header>
+
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
+
       </section>
 
+
+      <!-- LIVROS -->
       <section class="panel" id="livros" hidden>
-        <header class="intro"><p>Aqui está um livro que me lembra você</p></header>
-        <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
+
+        <header class="intro">
+          <p>Aqui está um livro que me lembra você</p>
+        </header>
+
+        <article class="card">
+          <div class="media"><img src="" alt=""></div>
+          <div class="cap"><p>Legenda aqui.</p></div>
+        </article>
+
       </section>
 
+
+      <!-- COMIDAS -->
       <section class="panel" id="comidas" hidden>
-        <header class="intro"><p>Aqui estão algumas comidas que você gosta</p></header>
+
+        <header class="intro">
+          <p>Aqui estão algumas comidas que você gosta</p>
+        </header>
+
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
@@ -134,99 +481,285 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:system-ui
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
+
       </section>
 
+
+      <!-- DESEJOS -->
       <section class="panel" id="desejos" hidden>
-        <header class="intro"><p>Aqui estão alguns desejos seus que eu quero realizar</p></header>
+
+        <header class="intro">
+          <p>Aqui estão alguns desejos seus que eu quero realizar</p>
+        </header>
+
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
+
       </section>
 
+
+      <!-- HOBBIES -->
       <section class="panel" id="hobbies" hidden>
-        <header class="intro"><p>Aqui estão alguns dos seus hobbies</p></header>
+
+        <header class="intro">
+          <p>Aqui estão alguns dos seus hobbies</p>
+        </header>
+
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
+
       </section>
 
+
+      <!-- POEMAS -->
       <section class="panel" id="poemas" hidden>
-        <header class="intro"><p>Aqui estão alguns poemas que escrevi para você</p></header>
+
+        <header class="intro">
+          <p>Aqui estão alguns poemas que escrevi para você</p>
+        </header>
+
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
         <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Legenda aqui.</p></div></article>
+
       </section>
 
+
+      <!-- CARTA -->
       <section class="panel" id="carta" hidden>
-        <header class="intro"><p>Por fim, uma carta para você</p></header>
-        <div class="letter">Escreva sua carta aqui.</div>
+
+        <header class="intro">
+          <p>Por fim, uma carta para você</p>
+        </header>
+
+        <div class="letter">
+          Escreva sua carta aqui.
+        </div>
+
       </section>
 
     </main>
+
   </div>
+
 </div>
 
+
 <script>
-const ORDER = ['locais','filmes','bandas','livros','comidas','desejos','hobbies','poemas','carta'];
+const ORDER = [
+  'locais',
+  'filmes',
+  'bandas',
+  'livros',
+  'comidas',
+  'desejos',
+  'hobbies',
+  'poemas',
+  'carta'
+];
+
 const REQUIRED = ORDER.slice(0, 8);
+
 const tabs = document.querySelectorAll('.tab');
 const panels = document.querySelectorAll('.panel');
 const main = document.getElementById('main');
 const cartaTab = document.querySelector('.tab.carta');
 
-// Abas já visitadas (guardadas no aparelho)
-let visited = new Set();
-try { visited = new Set(JSON.parse(localStorage.getItem('visited') || '[]')); } catch (e) {}
-function save(){ try { localStorage.setItem('visited', JSON.stringify([...visited])); } catch (e) {} }
 
-const isUnlocked = () => REQUIRED.every(id => visited.has(id));
+/*
+  IMPORTANTE:
+
+  As abas visitadas NÃO são salvas no localStorage.
+
+  A cada vez que a página é aberta/recarregada,
+  "visited" começa vazio novamente.
+*/
+const visited = new Set();
+
+
+function isUnlocked(){
+  return REQUIRED.every(id => visited.has(id));
+}
+
 
 function updateLock(){
-  cartaTab.classList.toggle('locked', !isUnlocked());
+
+  cartaTab.classList.toggle(
+    'locked',
+    !isUnlocked()
+  );
+
 }
+
 
 function openTab(id){
-  if (id === 'carta' && !isUnlocked()){
-    cartaTab.classList.remove('shake'); void cartaTab.offsetWidth; cartaTab.classList.add('shake');
+
+  // Impede abrir A Carta antes de visitar todas as abas
+  if(id === 'carta' && !isUnlocked()){
+
+    cartaTab.classList.remove('shake');
+
+    void cartaTab.offsetWidth;
+
+    cartaTab.classList.add('shake');
+
     return;
   }
-  tabs.forEach(t => t.classList.toggle('on', t.dataset.id === id));
-  panels.forEach(p => p.hidden = p.id !== id);
-  main.scrollTop = 0;
-  if (id !== 'carta') visited.add(id);
-  save(); updateLock();
 
-  // Mostra o indicador nas legendas que não cabem em 2 linhas
-  document.querySelectorAll('#' + id + ' .cap').forEach(c => {
-    const p = c.firstElementChild;
-    if (!c.classList.contains('open') && p.scrollHeight > p.clientHeight + 1) c.classList.add('long');
+
+  // Ativa a aba selecionada
+  tabs.forEach(tab => {
+
+    tab.classList.toggle(
+      'on',
+      tab.dataset.id === id
+    );
+
   });
+
+
+  // Mostra somente o painel selecionado
+  panels.forEach(panel => {
+
+    panel.hidden = panel.id !== id;
+
+  });
+
+
+  // Volta o conteúdo para o topo
+  main.scrollTop = 0;
+
+
+  // Registra a aba como visitada
+  // SOMENTE durante esta sessão.
+  // Não vai para localStorage.
+  if(id !== 'carta'){
+    visited.add(id);
+  }
+
+
+  // Atualiza o cadeado
+  updateLock();
+
+
+  // Detecta legendas grandes
+  document
+    .querySelectorAll('#' + id + ' .cap')
+    .forEach(cap => {
+
+      const p = cap.firstElementChild;
+
+      if(
+        !cap.classList.contains('open') &&
+        p.scrollHeight > p.clientHeight + 1
+      ){
+
+        cap.classList.add('long');
+
+      }
+
+    });
+
 }
 
-// Seta no final de cada aba (menos A Carta)
-const arrow = '<button class="next" aria-label="Próxima aba"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>';
-panels.forEach(p => { if (p.id !== 'carta') p.insertAdjacentHTML('beforeend', arrow); });
 
-main.addEventListener('click', e => {
-  const next = e.target.closest('.next');
-  if (next){
-    const from = next.closest('.panel').id;
-    let target = ORDER[ORDER.indexOf(from) + 1];
-    if (target === 'carta' && !isUnlocked()) target = REQUIRED.find(id => !visited.has(id));
-    openTab(target);
-    return;
+// Cria a seta de próxima aba
+const arrow = `
+<button
+  class="next"
+  aria-label="Próxima aba"
+>
+  <svg viewBox="0 0 24 24">
+    <path d="M9 6l6 6-6 6"/>
+  </svg>
+</button>
+`;
+
+
+panels.forEach(panel => {
+
+  if(panel.id !== 'carta'){
+    panel.insertAdjacentHTML(
+      'beforeend',
+      arrow
+    );
   }
-  const cap = e.target.closest('.cap.long');
-  if (cap) cap.classList.toggle('open');
+
 });
 
-tabs.forEach(t => t.addEventListener('click', () => openTab(t.dataset.id)));
 
+main.addEventListener('click', event => {
+
+  // Próxima aba
+  const next = event.target.closest('.next');
+
+  if(next){
+
+    const from = next.closest('.panel').id;
+
+    let target =
+      ORDER[ORDER.indexOf(from) + 1];
+
+
+    // Se a próxima seria A Carta,
+    // mas ainda não desbloqueou,
+    // vai para a primeira aba que falta.
+    if(
+      target === 'carta' &&
+      !isUnlocked()
+    ){
+
+      target =
+        REQUIRED.find(
+          id => !visited.has(id)
+        );
+
+    }
+
+
+    openTab(target);
+
+    return;
+  }
+
+
+  // Expandir/recolher legenda
+  const cap =
+    event.target.closest('.cap.long');
+
+  if(cap){
+    cap.classList.toggle('open');
+  }
+
+});
+
+
+tabs.forEach(tab => {
+
+  tab.addEventListener(
+    'click',
+    () => openTab(tab.dataset.id)
+  );
+
+});
+
+
+/*
+  Começa sempre em Locais.
+
+  Como "visited" é apenas um Set em memória,
+  quando a página é recarregada ele é criado vazio
+  novamente e A Carta volta a ficar bloqueada.
+*/
 updateLock();
 openTab('locais');
+
 </script>
+
 </body>
 </html>
