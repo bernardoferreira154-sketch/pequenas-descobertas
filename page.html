@@ -34,9 +34,14 @@
       Olá, seja bem vinda, Lara!
     </h1>
 
-    <p>
-      Esse site contém algumas descobertas que eu fiz sobre alguém muito especial.
-    </p>
+    <section class="content" id="content">
+      <h1>Olá, seja bem vinda, Lara!</h1>
+      <p>
+        Esse site contém algumas descobertas que eu fiz sobre alguém muito especial.
+      </p>
+      <button class="btn" id="enter" type="button">Entrar</button>
+    </section>
+  </main>
 
     <button
       class="btn"
@@ -258,11 +263,7 @@ body {
   text-align: center;
 
   padding: 0 40px;
-
-  transition:
-    opacity 0.45s ease,
-    transform 0.45s ease;
-
+  transition: opacity 0.45s ease, transform 0.45s ease;
 }
 
 
@@ -332,18 +333,17 @@ p {
 
 }
 
-
 .btn:hover {
+  box-shadow: 0 0 20px 4px rgba(120, 181, 127, 0.55);
+}
+
+.btn:active {
+  transform: scale(0.95);
 
   box-shadow:
     0 0 20px 4px
     rgba(120, 181, 127, 0.55);
-
 }
-
-
-.btn:active {
-
   transform: scale(0.95);
 
   box-shadow:
