@@ -1,763 +1,358 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Pequenas Descobertas Sobre Você</title>
 
-<style>
-:root{
-  --bg:#0a0d0b;
-  --fg:#fff;
-  --bar:#6fae75;
-  --shape:#3f7046;
-  --tab:#6fb572;
-  --tab-on:#7fcf83;
-  --tab-lock:#2f5230;
-  --card:#2a2a2a;
-  --cap:#d9d9d9;
-  --line:#5a5d5b;
-  --next:#2b2f2c;
-}
+  <meta charset="UTF-8">
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  -webkit-tap-highlight-color:transparent
-}
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
 
-html,body{
-  height:100%;
-  background:var(--bg);
-  color:var(--fg);
-  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif
-}
+  <title>Pequenas Descobertas Sobre Você</title>
 
-.app{
-  display:flex;
-  flex-direction:column;
-  height:100dvh;
-  max-width:480px;
-  margin:0 auto;
-  padding-top:env(safe-area-inset-top,0)
-}
-
-/* Barra superior */
-.bar{
-  position:relative;
-  flex:0 0 44px;
-  background:var(--bar);
-  overflow:hidden
-}
-
-.bar i{
-  position:absolute;
-  background:var(--shape);
-  opacity:.85
-}
-
-.bar i:nth-child(1){
-  left:6%;
-  top:10px;
-  width:20px;
-  height:18px;
-  border-radius:40%;
-  transform:rotate(15deg)
-}
-
-.bar i:nth-child(2){
-  left:21%;
-  top:24px;
-  width:12px;
-  height:12px;
-  border-radius:50%
-}
-
-.bar i:nth-child(3){
-  left:33%;
-  top:8px;
-  width:10px;
-  height:22px;
-  border-radius:0 100% 0 100%;
-  transform:rotate(20deg)
-}
-
-.bar i:nth-child(4){
-  left:53%;
-  top:4px;
-  width:30px;
-  height:30px;
-  border-radius:0 100% 0 0;
-  transform:rotate(20deg)
-}
-
-.bar i:nth-child(5){
-  left:74%;
-  top:6px;
-  width:20px;
-  height:20px;
-  border-radius:50%
-}
-
-.bar i:nth-child(6){
-  left:88%;
-  top:6px;
-  width:26px;
-  height:26px;
-  border-radius:20% 100% 20% 20%;
-  transform:rotate(45deg)
-}
-
-.body{
-  flex:1;
-  display:flex;
-  min-height:0
-}
-
-/* Menu lateral */
-.side{
-  flex:0 0 clamp(104px,31%,140px);
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  padding:14px 10px 24px;
-  border-right:2px solid var(--line);
-  overflow-y:auto
-}
-
-.tab{
-  position:relative;
-  flex:0 0 auto;
-  height:38px;
-  border:0;
-  border-radius:14px;
-  background:var(--tab);
-  color:#fff;
-  font:inherit;
-  font-size:14px;
-  cursor:pointer;
-  transition:background .25s,box-shadow .25s
-}
-
-.tab.on{
-  background:var(--tab-on);
-  box-shadow:
-    0 0 0 2px rgba(143,224,148,.35),
-    0 0 14px 3px rgba(127,207,131,.65)
-}
-
-.tab.carta.locked{
-  background:var(--tab-lock);
-  color:rgba(255,255,255,.85)
-}
-
-.tab.carta:not(.locked):not(.on){
-  box-shadow:0 0 12px 3px rgba(127,207,131,.5);
-  animation:pulse 2.4s ease-in-out infinite
-}
-
-.tab .lock{
-  position:absolute;
-  right:-3px;
-  bottom:-9px;
-  width:18px;
-  height:20px
-}
-
-.tab.carta:not(.locked) .lock{
-  display:none
-}
-
-.tab.shake{
-  animation:shake .35s
-}
-
-@keyframes pulse{
-  50%{
-    box-shadow:0 0 20px 6px rgba(127,207,131,.7)
-  }
-}
-
-@keyframes shake{
-  25%{transform:translateX(-4px)}
-  75%{transform:translateX(4px)}
-}
-
-/* Conteúdo */
-.main{
-  flex:1;
-  min-width:0;
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
-  padding:20px 16px 8px
-}
-
-.panel[hidden]{
-  display:none
-}
-
-.intro{
-  padding:0 4px 18px;
-  border-bottom:2px solid var(--line);
-  margin-bottom:24px
-}
-
-.intro p{
-  font-size:15px;
-  line-height:1.35
-}
-
-/* Cards imagem + legenda */
-.card{
-  width:100%;
-  max-width:240px;
-  margin:0 auto 24px;
-  border-radius:0 0 16px 16px;
-  overflow:hidden;
-  background:var(--card)
-}
-
-.media{
-  aspect-ratio:210/185;
-  background:var(--card)
-}
-
-.media img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover
-}
-
-.media img[src=""],
-.media img:not([src]){
-  display:none
-}
-
-.cap{
-  position:relative;
-  min-height:60px;
-  padding:10px 28px 10px 14px;
-  background:var(--cap);
-  color:#1a1a1a;
-  font-size:13px;
-  line-height:1.35
-}
-
-.cap p{
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden
-}
-
-.cap.long{
-  cursor:pointer
-}
-
-.cap.long::after{
-  content:"";
-  position:absolute;
-  right:12px;
-  top:16px;
-  width:7px;
-  height:7px;
-  border:solid #555;
-  border-width:0 2px 2px 0;
-  transform:rotate(45deg);
-  transition:transform .2s
-}
-
-.cap.open p{
-  display:block;
-  -webkit-line-clamp:unset;
-  overflow:visible
-}
-
-.cap.open::after{
-  transform:rotate(-135deg)
-}
-
-.letter{
-  padding:6px 4px 30px;
-  font-size:14px;
-  line-height:1.6
-}
-
-/* Seta próxima aba */
-.next{
-  display:grid;
-  place-items:center;
-  width:44px;
-  height:44px;
-  margin:34px auto 28px;
-  border:0;
-  border-radius:50%;
-  background:var(--next);
-  cursor:pointer
-}
-
-.next svg{
-  width:20px;
-  height:20px;
-  fill:none;
-  stroke:#aeb5b0;
-  stroke-width:2.5;
-  stroke-linecap:round;
-  stroke-linejoin:round
-}
-
-.next:active{
-  transform:scale(.92)
-}
-</style>
 </head>
 
 <body>
 
-<div class="app">
+<script src="script.js" defer></script>
 
-  <div class="bar">
-    <i></i>
-    <i></i>
-    <i></i>
-    <i></i>
-    <i></i>
-    <i></i>
-  </div>
 
-  <div class="body">
+<main class="screen">
 
-    <nav class="side">
+  <div class="shape s1"></div>
+  <div class="shape s2"></div>
+  <div class="shape s3"></div>
+  <div class="shape s4"></div>
+  <div class="shape s5"></div>
 
-      <button class="tab" data-id="locais">Locais</button>
 
-      <button class="tab" data-id="filmes">Filmes</button>
+  <section class="content" id="content">
 
-      <button class="tab" data-id="bandas">Bandas</button>
+    <h1>
+      Olá, seja bem vinda, Lara!
+    </h1>
 
-      <button class="tab" data-id="livros">Livros</button>
+    <section class="content" id="content">
+      <h1>Olá, seja bem vinda, Lara!</h1>
+      <p>
+        Esse site contém algumas descobertas que eu fiz sobre alguém muito especial.
+      </p>
+      <button class="btn" id="enter" type="button">Entrar</button>
+    </section>
+  </main>
 
-      <button class="tab" data-id="comidas">Comidas</button>
+    <button
+      class="btn"
+      id="enter"
+      type="button"
+    >
+      Entrar
+    </button>
 
-      <button class="tab" data-id="desejos">Desejos</button>
+  </section>
 
-      <button class="tab" data-id="hobbies">Hobbies</button>
+</main>
 
-      <button class="tab" data-id="poemas">Poemas</button>
 
-      <button class="tab carta locked" data-id="carta">
-        A Carta
+<style>
 
-        <svg class="lock" viewBox="0 0 18 20">
-          <path
-            d="M5 9V6a4 4 0 0 1 8 0v3"
-            fill="none"
-            stroke="#c9a800"
-            stroke-width="2"
-          />
+:root {
 
-          <rect
-            x="1"
-            y="9"
-            width="16"
-            height="10"
-            rx="1"
-            fill="#e0bd00"
-          />
-        </svg>
+  --bg: #0a0d0b;
+  --fg: #ffffff;
 
-      </button>
+  --green: #5f8f66;
+  --green-2: #78b57f;
 
-    </nav>
-
-    <main class="main" id="main">
-
-      <!-- LOCAIS -->
-      <section class="panel" id="locais" hidden>
-
-        <header class="intro">
-          <p>Aqui estão alguns locais em que nós estivemos juntos</p>
-        </header>
-
-        <article class="card">
-          <div class="media">
-            <img src="images/escola.webp" alt="">
-          </div>
-
-          <div class="cap">
-            <p>
-              Escola - Lugar onde você me conheceu e onde tudo começou.
-            </p>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="media"><img src="images/ticen.jfif" alt=""></div>
-          <div class="cap"><p>Ticen - Onde eu te encontrei pela primeira vez.</p></div>
-        </article>
-
-        <article class="card">
-          <div class="media"><img src="images/shopping.jfif" alt=""></div>
-          <div class="cap"><p>Beiramar Shopping - Lugar onde minha privacidade foi invadida pelos seus amiguinhos e onde eu me apaixonei por você pela primeira vez.</p></div>
-        </article>
-
-        <article class="card">
-          <div class="media"><img src="images/centro.jpg" alt=""></div>
-          <div class="cap"><p>Centro - Onde a gente caminhou, encontrei um cara de cabelo rosa, comprei um besouro pra você, e você ficou puta comigo por não saber andar direito. :/</p></div>
-        </article>
-
-      </section>
-
-
-      <!-- FILMES -->
-      <section class="panel" id="filmes" hidden>
-
-        <header class="intro">
-          <p>Aqui estão alguns filmes que eu sei que você gosta ou que pelo menos ja assistiu.</p>
-        </header>
-
-        <article class="card"><div class="media"><img src="images/blade.webp" alt=""></div><div class="cap"><p>Blade: O Caçador e Vampiros - Segundo você, o seu filme de conforto.</p></div></article>
-        <article class="card"><div class="media"><img src="images/laranja.jfif" alt=""></div><div class="cap"><p>Laranja Mecânica - Você não falou muito sobre ele, mas pelo que você fala do livro eu imagino que goste.</p></div></article>
-        <article class="card"><div class="media"><img src="images/van.jfif" alt=""></div><div class="cap"><p>Van Helsing: O Caçador De Monstros - Ainda to te devendo ver esse filme...</p></div></article>
-        <article class="card"><div class="media"><img src="images/supernatural.jfif" alt=""></div><div class="cap"><p>Supernatural - Não é exatamente um filme, mas tu disse que ja assistiu muitas vezes. E ele me lembra você.</p></div></article>
-        <article class="card"><div class="media"><img src="images/crepusculo.jfif" alt=""></div><div class="cap"><p>Crepúsculo - Não sei por que mulher gosta tanto desse filme. Quero ver ele com você algum dia.</p></div></article>
-        <article class="card"><div class="media"><img src="images/labirinto.jfif" alt=""></div><div class="cap"><p>O Labirinto do Fauno - Você falou que gostava desse filme no primeiro dia que conversamos.</p></div></article>
-        <article class="card"><div class="media"><img src="images/hilda.jfif" alt=""></div><div class="cap"><p>Hilda Furacão - Acho que você tem um pouco de fetiche em padre...</p></div></article>
-        <article class="card"><div class="media"><img src="images/tubarao.jfif" alt=""></div><div class="cap"><p>O Ataque do Tubarão de 3/5/6 Cabeças - Realmente não sei por que você gosta tanto desses filmes.</p></div></article>
-        <article class="card"><div class="media"><img src="images/tubarao2.jfif" alt=""></div><div class="cap"><p>Mais uma porrada de filmes toscos de tubarão que eu não me importaria de passar a semana inteira vendo com você.</p></div></article>
-
-      </section>
-
-
-      <!-- BANDAS -->
-      <section class="panel" id="bandas" hidden>
-
-        <header class="intro">
-          <p>Aqui estão algumas bandas que eu lembro que você gosta</p>
-        </header>
-
-        <article class="card"><div class="media"><img src="images/smiths.jfif" alt=""></div><div class="cap"><p>The Smiths - Sua banda favorita.</p></div></article>
-        <article class="card"><div class="media"><img src="images/doom.jfif" alt=""></div><div class="cap"><p>MF DOOM - Eu vi ela em algum sotries seu se não me engano.</p></div></article>
-        <article class="card"><div class="media"><img src="images/balchior.jfif" alt=""></div><div class="cap"><p>Belchior - Também vi em algum stories seu.</p></div></article>
-        <article class="card"><div class="media"><img src="images/tyler.jfif" alt=""></div><div class="cap"><p>Tyler, The Creator - você comentou que gosta dele na primeira vez que a gente conversou.</p></div></article>
-        <article class="card"><div class="media"><img src="images/trash.jfif" alt=""></div><div class="cap"><p>Trash Poll - também disse que gosta dele no dia em que pediu o meu instagram.</p></div></article>
-
-      </section>
-
-
-      <!-- LIVROS -->
-      <section class="panel" id="livros" hidden>
-
-        <header class="intro">
-          <p>Só tem um Livro aqui por que é o unico que você comentou sobre, mesmo tendo falado que gosta de ler.</p>
-        </header>
-
-        <article class="card">
-          <div class="media"><img src="images/labirinto2.jfif" alt=""></div>
-          <div class="cap"><p>Labirinto Do Fauno - acho que foi a primeira coisa que me deu uma "boa impressão" sobre você.</p></div>
-        </article>
-
-      </section>
-
-
-      <!-- COMIDAS -->
-      <section class="panel" id="comidas" hidden>
-
-        <header class="intro">
-          <p>Aqui estão algumas comidas que você disse que gosta, ou que eu imagino que goste... não daria para listar todas, eu passaria uma eternidade aqui.</p>
-        </header>
-
-        <article class="card"><div class="media"><img src="images/sonho.jfif" alt=""></div><div class="cap"><p>Sonho de Chocolate - Seu pai é padeiro? porque você é um sonho... que vergonha de estar escrevendo isso.</p></div></article>
-        <article class="card"><div class="media"><img src="images/kfc.png" alt=""></div><div class="cap"><p>Frango - Come isso todo dia, Não sei como não enjoa.</p></div></article>
-        <article class="card"><div class="media"><img src="images/batata.jfif" alt=""></div><div class="cap"><p>Caldo de Batata - Não sei, lembro que você comentou que estava comendo um dia desses.</p></div></article>
-        <article class="card"><div class="media"><img src="images/guaca.jfif" alt=""></div><div class="cap"><p>Guacamole - Você fez depois do seu pai depositar dinheiro, e você ir comprar os ingredientes com a sua mãe.</p></div></article>
-        <article class="card"><div class="media"><img src="images/fini.jfif" alt=""></div><div class="cap"><p>Bala Azeda - A primeira coisa que eu te dei.</p></div></article>
-        <article class="card"><div class="media"><img src="images/limao.jfif" alt=""></div><div class="cap"><p>Limão com Pimenta e Sal - Coisa de alcoólatra...</p></div></article>
-        <article class="card"><div class="media"><img src="images/bolo.jfif" alt=""></div><div class="cap"><p>Bolo - Acho que aquele bolo que você me deu foi um dos melhores bolos que eu ja comi. muito obrigado, meu amor!</p></div></article>
-        <article class="card"><div class="media"><img src="images/queijo.jfif" alt=""></div><div class="cap"><p>Queijo - Mineirinha...</p></div></article>
-        <article class="card"><div class="media"><img src="images/eu.jpeg" alt=""></div><div class="cap"><p>Eu - ...</p></div></article>
-
-      </section>
-
-
-      <!-- DESEJOS -->
-      <section class="panel" id="desejos" hidden>
-
-        <header class="intro">
-          <p>Aqui estão alguns desejos seus que eu quero te ver realizar.</p>
-        </header>
-
-        <article class="card"><div class="media"><img src="images/laranja2.jfif" alt=""></div><div class="cap"><p>Ler "laranja Mecanica" - Deve ter falado disso umas 20 vezes já. compra isso na internet logo.</p></div></article>
-        <article class="card"><div class="media"><img src="images/italia.jfif" alt=""></div><div class="cap"><p>Ir pra Itália - Quero te levar pra lá algum dia para a gente ver o cadaver da sua bisavó...</p></div></article>
-        <article class="card"><div class="media"><img src="images/maquina.jfif" alt=""></div><div class="cap"><p>Ter uma Máquina de Costura - Mesmo que você tenha dito que é complicado demais de mexer.</p></div></article>
-        <article class="card"><div class="media"><img src="images/sushi.jfif" alt=""></div><div class="cap"><p>Comer Sushi - Quero te levar pra comer algum dia, se sua mãe não estiver querendo me espancar.</p></div></article>
-
-      </section>
-
-
-      <!-- HOBBIES -->
-      <section class="panel" id="hobbies" hidden>
-
-        <header class="intro">
-          <p>Aqui estão alguns dos seus hobbies que eu quero fazer com você.</p>
-        </header>
-
-        <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Costurar - Adoro as roupas que você faz. Ainda me lembro do dia que você disse que ia me ensinar a costurar e eu te ensinar a programar...</p></div></article>
-        <article class="card"><div class="media"><img src="" alt=""></div><div class="cap"><p>Desenhar - queria saber desenhar tão bem quanto você. Gosto muito de ver seus desenhos, principalmente os sobre nós.</p></div></article>
-        <article class="card"><div class="media"><img src="images/poema.jpeg" alt=""></div><div class="cap"><p>Escrever Poemas - Acho muito legal que você goste desse tipo de coisa. acho seus poemas muito bonitos, e espero um dia poder ser a inspiração de um deles...</p></div></article>
-        <article class="card"><div class="media"><img src="images/hilda.jfif" alt=""></div><div class="cap"><p>Assistir Novela - Idosa.</p></div></article>
-        <article class="card"><div class="media"><img src="images/globo.jfif" alt=""></div><div class="cap"><p>Assistir Tv - Ta ficando repetitivo, mas eu adoraria assistir com você...</p></div></article>
-        <article class="card"><div class="media"><img src="images/comer.jpeg" alt=""></div><div class="cap"><p>Comer - Não preciso nem falar nada, imagino.</p></div></article>
-
-      </section>
-
-
-      <!-- POEMAS -->
-      <section class="panel" id="poemas" hidden>
-
-        <header class="intro">
-          <p>Aqui estão alguns de seus lindos poemas</p>
-        </header>
-
-        <article class="card"><div class="media"><img src="images/poema1.jpeg" alt=""></div><div class="cap"><p>Hipocrisia, ambiguidade, ou loucura? E difícil sempre entender uma outra pessoa na qual não é você, exatamente por que suas mentes são diferentes como um todo, apenas encontrando concordância em coisas básicas, ou nem isso. Mais...e quando você mesmo que tente conhecer, e a pessoa tente explicar, você não entende ela, ela fala coisas, e depois outras, e age de forma...que te deixa confusa sobre o que ela quer, um olhar, mãos entrelaçadas, mais a constância da pessoa ao dizer que "eu quero te ver bem" ou "estou feliz ao te ver". Eu não entendo, pois depois disso, a pessoa some, e fica o silêncio, mais não o desconfortável, mais o ansioso por respostas coerentes. Enfim hipocrisia, ambiguidade, ou loucura?</p></div></article>
-        <article class="card"><div class="media"><img src="images/poema2.jpeg" alt=""></div><div class="cap"><p>Incrível como seres humanos tem tantas faces, como um espelho quebrado em vários estilhaços, você nunca saberá quando ele é realmente "ele", pois ele pode finjir- se ser outro reflexo na ausência do olhar do outro, mais ele não consegue fingir seu reflexo de si próprio. E é ainda mais incrível quando o ser é seu reflexo são tão rachados que ele mesmo em uma tentativa fútil de fugir de si próprio se mostra em todos os ângulos de seu reflexo, e ainda culpa os olhares que o viram de "julgadores radicais " sendo que não estão julgando seu reflexo, e sim o vendo de verdade. E sabemos que isso não é sobre espelhos.</p></div></article>
-
-      </section>
-
-
-      <!-- CARTA -->
-      <section class="panel" id="carta" hidden>
-
-        <header class="intro">
-          <p>Primeiro, eu gostaria de falar que podem ter faltado muitas coisas aí, mas eu queria fazer isso apenas com coisas que vieram da minha mente, não queria pegar nada nas nossas conversas. Então se estiver faltando alguma coisa importante, me desculpa.
-            Dito isso, a carta:
-          </p>
-        </header>
-
-        <div class="letter">
-          
-        </div>
-
-      </section>
-
-    </main>
-
-  </div>
-
-</div>
-
-
-<script>
-const ORDER = [
-  'locais',
-  'filmes',
-  'bandas',
-  'livros',
-  'comidas',
-  'desejos',
-  'hobbies',
-  'poemas',
-  'carta'
-];
-
-const REQUIRED = ORDER.slice(0, 8);
-
-const tabs = document.querySelectorAll('.tab');
-const panels = document.querySelectorAll('.panel');
-const main = document.getElementById('main');
-const cartaTab = document.querySelector('.tab.carta');
-
-
-/*
-  IMPORTANTE:
-
-  As abas visitadas NÃO são salvas no localStorage.
-
-  A cada vez que a página é aberta/recarregada,
-  "visited" começa vazio novamente.
-*/
-const visited = new Set();
-
-
-function isUnlocked(){
-  return REQUIRED.every(id => visited.has(id));
-}
-
-
-function updateLock(){
-
-  cartaTab.classList.toggle(
-    'locked',
-    !isUnlocked()
-  );
+  --btn-text: #0d1a10;
 
 }
 
 
-function openTab(id){
+* {
 
-  // Impede abrir A Carta antes de visitar todas as abas
-  if(id === 'carta' && !isUnlocked()){
+  box-sizing: border-box;
+  margin: 0;
 
-    cartaTab.classList.remove('shake');
+  -webkit-tap-highlight-color: transparent;
 
-    void cartaTab.offsetWidth;
-
-    cartaTab.classList.add('shake');
-
-    return;
-  }
+}
 
 
-  // Ativa a aba selecionada
-  tabs.forEach(tab => {
+html,
+body {
 
-    tab.classList.toggle(
-      'on',
-      tab.dataset.id === id
+  height: 100%;
+
+  background: var(--bg);
+  color: var(--fg);
+
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+
+}
+
+
+body {
+
+  display: flex;
+  justify-content: center;
+
+}
+
+
+/* Tela */
+
+.screen {
+
+  position: relative;
+
+  width: 100%;
+  max-width: 360px;
+
+  min-height: 100%;
+
+  overflow: hidden;
+
+  background: var(--bg);
+
+}
+
+
+/* Formas decorativas */
+
+.shape {
+
+  position: absolute;
+
+  background: var(--green);
+
+  opacity: 0.9;
+
+  animation:
+    float 7s ease-in-out infinite;
+
+}
+
+
+.s1 {
+
+  top: 11%;
+  left: 8%;
+
+  width: 58px;
+  height: 58px;
+
+  clip-path:
+    polygon(
+      0 30%,
+      25% 25%,
+      30% 0,
+      55% 12%,
+      80% 8%,
+      100% 30%,
+      95% 60%,
+      80% 85%,
+      50% 100%,
+      15% 95%,
+      0 70%
     );
 
-  });
+}
 
 
-  // Mostra somente o painel selecionado
-  panels.forEach(panel => {
+.s2 {
 
-    panel.hidden = panel.id !== id;
+  top: 30%;
+  left: 63%;
 
-  });
+  width: 28px;
+  height: 26px;
 
+  border-radius:
+    0 100% 0 100%;
 
-  // Volta o conteúdo para o topo
-  main.scrollTop = 0;
-
-
-  // Registra a aba como visitada
-  // SOMENTE durante esta sessão.
-  // Não vai para localStorage.
-  if(id !== 'carta'){
-    visited.add(id);
-  }
-
-
-  // Atualiza o cadeado
-  updateLock();
-
-
-  // Detecta legendas grandes
-  document
-    .querySelectorAll('#' + id + ' .cap')
-    .forEach(cap => {
-
-      const p = cap.firstElementChild;
-
-      if(
-        !cap.classList.contains('open') &&
-        p.scrollHeight > p.clientHeight + 1
-      ){
-
-        cap.classList.add('long');
-
-      }
-
-    });
+  animation-delay: -2s;
 
 }
 
 
-// Cria a seta de próxima aba
-const arrow = `
-<button
-  class="next"
-  aria-label="Próxima aba"
->
-  <svg viewBox="0 0 24 24">
-    <path d="M9 6l6 6-6 6"/>
-  </svg>
-</button>
-`;
+.s3 {
+
+  top: 31%;
+  left: 76%;
+
+  width: 14px;
+  height: 78px;
+
+  border-radius: 50px;
+
+  transform: rotate(-45deg);
+
+  animation: none;
+
+}
 
 
-panels.forEach(panel => {
+.s4 {
 
-  if(panel.id !== 'carta'){
-    panel.insertAdjacentHTML(
-      'beforeend',
-      arrow
-    );
+  bottom: 12%;
+  left: 16%;
+
+  width: 54px;
+  height: 54px;
+
+  border-radius:
+    100% 0 60% 0;
+
+  transform: rotate(-135deg);
+
+  animation-delay: -4s;
+
+}
+
+
+.s5 {
+
+  bottom: 15%;
+  left: 70%;
+
+  width: 44px;
+  height: 44px;
+
+  border-radius: 30%;
+
+  transform: rotate(45deg);
+
+  animation-delay: -1s;
+
+}
+
+
+@keyframes float {
+
+  50% {
+    translate: 0 -8px;
   }
 
-});
+}
 
 
-main.addEventListener('click', event => {
+/* Conteúdo central */
 
-  // Próxima aba
-  const next = event.target.closest('.next');
+.content {
 
-  if(next){
+  position: absolute;
 
-    const from = next.closest('.panel').id;
+  inset: 0;
 
-    let target =
-      ORDER[ORDER.indexOf(from) + 1];
+  display: flex;
 
+  flex-direction: column;
 
-    // Se a próxima seria A Carta,
-    // mas ainda não desbloqueou,
-    // vai para a primeira aba que falta.
-    if(
-      target === 'carta' &&
-      !isUnlocked()
-    ){
+  align-items: center;
 
-      target =
-        REQUIRED.find(
-          id => !visited.has(id)
-        );
+  justify-content: center;
 
-    }
+  text-align: center;
+
+  padding: 0 40px;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
 
 
-    openTab(target);
+.content.fade {
 
-    return;
-  }
+  opacity: 0;
 
+  transform: translateY(-8px);
 
-  // Expandir/recolher legenda
-  const cap =
-    event.target.closest('.cap.long');
-
-  if(cap){
-    cap.classList.toggle('open');
-  }
-
-});
+}
 
 
-tabs.forEach(tab => {
+h1 {
 
-  tab.addEventListener(
-    'click',
-    () => openTab(tab.dataset.id)
-  );
+  font-size: 15px;
 
-});
+  font-weight: 500;
+
+  margin-bottom: 4px;
+
+}
 
 
-/*
-  Começa sempre em Locais.
+p {
 
-  Como "visited" é apenas um Set em memória,
-  quando a página é recarregada ele é criado vazio
-  novamente e A Carta volta a ficar bloqueada.
-*/
-updateLock();
-openTab('locais');
+  font-size: 11.5px;
 
-</script>
+  line-height: 1.3;
+
+  max-width: 240px;
+
+}
+
+
+/* Botão */
+
+.btn {
+
+  margin-top: 52px;
+
+  width: 100px;
+  height: 40px;
+
+  border: 0;
+
+  border-radius: 12px;
+
+  background: var(--green-2);
+
+  color: var(--btn-text);
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  box-shadow:
+    0 0 14px 2px
+    rgba(120, 181, 127, 0.45);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+
+}
+
+.btn:hover {
+  box-shadow: 0 0 20px 4px rgba(120, 181, 127, 0.55);
+}
+
+.btn:active {
+  transform: scale(0.95);
+
+  box-shadow:
+    0 0 20px 4px
+    rgba(120, 181, 127, 0.55);
+}
+  transform: scale(0.95);
+
+  box-shadow:
+    0 0 22px 4px
+    rgba(120, 181, 127, 0.6);
+
+}
+
+</style>
 
 </body>
 </html>

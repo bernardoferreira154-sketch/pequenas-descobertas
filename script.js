@@ -7,7 +7,7 @@ if (enterButton) {
     content.classList.add("fade");
 
     setTimeout(() => {
-      window.location.href = "index.html";
+      window.location.href = "page.html";
     }, 450);
   });
 }
